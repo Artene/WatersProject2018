@@ -6,10 +6,14 @@ Generator::Generator()
 {
 }
 
-Generator::Generator(int NumberOfGeneratedNumbers)
+Generator::Generator(int NumberOfGeneratedNumbers,double MinimumLimit, double MaximumLimit,double ThresHoldSize)
 {
 	this->m_NumberOfGeneratedNumbers = NumberOfGeneratedNumbers;
+	this->m_MinimumLimit = MinimumLimit;
+	this->m_MaximumLimit = MaximumLimit;
+	this->m_ThresHoldSize=ThresHoldSize;
 }
+
 
 
 double Generator::Randomize(double InferiorLimit, double SuperiorLimit)
@@ -21,39 +25,40 @@ double Generator::Randomize(double InferiorLimit, double SuperiorLimit)
 	
 }
 
-void Generator::TreshHold(double &InferiorLimit, double &SuperiorLimit,int ThresHoldSize)
+double Generator::ThresHold(double &PreviousInferiorLimitOfRandom, double &PreviousSuperiorLimitOfRandom, int ThresHoldSize, double MinimumLimit, double MaximumLimit)
 {
-	//Ce e in main vine scris in functia WriteInFile din clasa Generator
-	//treshold=10;FirstNumber apartine [5,15] se poate lua si altceva...dar trebuie modificat si la limite
-	int FirstNumber = Randomize(5, 15);
-	int PreviousInferiorLimit = FirstNumber - ThresHoldSize;
-	int PreviousSuperiorLimit = FirstNumber + ThresHoldSize;
-	
-	//100=NrMaxPuncte
-		int RandomNumber = Randomize(PreviousInferiorLimit, PreviousSuperiorLimit);
-		if (PreviousInferiorLimit < ThresHoldSize)
+	double RandomNumber;
+		
+		if (PreviousInferiorLimitOfRandom < MinimumLimit)
 		{
-			PreviousInferiorLimit = 5;
-			PreviousSuperiorLimit = 15;
+			PreviousInferiorLimitOfRandom = MinimumLimit;
+			PreviousSuperiorLimitOfRandom = MinimumLimit+ThresHoldSize;
+			RandomNumber = Randomize(PreviousInferiorLimitOfRandom, PreviousSuperiorLimitOfRandom);
+		}
+		else if (PreviousSuperiorLimitOfRandom>MaximumLimit)
+		{
+			PreviousInferiorLimitOfRandom = MaximumLimit-ThresHoldSize;
+			PreviousSuperiorLimitOfRandom = MaximumLimit;
+			RandomNumber = Randomize(PreviousInferiorLimitOfRandom, PreviousSuperiorLimitOfRandom);
 		}
 		else
 		{
-			PreviousInferiorLimit = RandomNumber - ThresHoldSize;
-			PreviousSuperiorLimit = RandomNumber + ThresHoldSize;
+			RandomNumber = Randomize(PreviousInferiorLimitOfRandom, PreviousSuperiorLimitOfRandom);
+			PreviousInferiorLimitOfRandom = RandomNumber - ThresHoldSize/2;
+			PreviousSuperiorLimitOfRandom = RandomNumber + ThresHoldSize/2;
 		}
-
+		return RandomNumber;
 }
 
 void Generator::WriteRandomNumberToFile()
 {
-	int YCoord;
-	double InferiorLimit;
-	double SuperiorLimit;
-	TreshHold(InferiorLimit,SuperiorLimit,5);
+	double YCoord;
+	double InferiorLimit=this->m_MinimumLimit;
+	double SuperiorLimit=this->m_MaximumLimit;
 	std::ofstream fout("GeneratedNumbers.txt");
 	for (int XCoord = 0; XCoord < this->m_NumberOfGeneratedNumbers; XCoord++) {
-		YCoord = Randomize(InferiorLimit,SuperiorLimit);
-		fout << XCoord << " " << YCoord << std::endl;
+		YCoord = ThresHold(InferiorLimit,SuperiorLimit,this->m_ThresHoldSize,this->m_MinimumLimit,this->m_MaximumLimit);
+		fout << XCoord << " " << YCoord <<std::endl;
 	}
 	fout.close();
 }

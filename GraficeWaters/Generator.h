@@ -5,12 +5,15 @@ class Generator
 {
 private:
 	int m_NumberOfGeneratedNumbers;
+	double m_MinimumLimit;
+	double m_MaximumLimit;
+	double m_ThresHoldSize;
 
 public:
 	Generator();
-	Generator(int);
+	Generator(int,double,double,double);
 	double Randomize(double,double);
-	void TreshHold(double&, double&,int);
+	double ThresHold(double&, double&,int,double,double);
 	void WriteRandomNumberToFile();
 	~Generator();
 };
