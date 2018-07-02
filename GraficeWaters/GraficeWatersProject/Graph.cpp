@@ -5,36 +5,37 @@ Graph::Graph()
 {
 }
 
-Graph::Graph(std::string NameOfFile)
+Graph::Graph(std::string nameOfFile)
 {
-	std::ifstream fin(NameOfFile);
-	int Iterator = 0;
+	std::ifstream fin(nameOfFile);
 	while (!fin.eof()) {
 		std::pair<double,double> aux;
 		fin >> aux.first;
 		fin >> aux.second;
-		this->m_Points.push_back(aux);
+		this->graphPointsContainer.push_back(aux);
 	}
+	this->graphPointsContainer.pop_back();
+	/* TO DO:
+	=> this->graphPointsContainer.pop_back() arata foarte taranesc, daca avem timp si chef in viitor,
+	sa modificam astfel incat sa nu mai avem nevoie de formularea asta, dar sa functioneze la fel
+	*/
 }
 
 void Graph::DisplayOnScreen()
 {
-	for (int i = 0; i < this->m_Points.size(); i++)
+	for (int i = 0; i < this->graphPointsContainer.size(); i++)
 	{
-		std::cout << this->m_Points.at(i).first << " " << this->m_Points.at(i).second << std::endl;
+		std::cout << this->graphPointsContainer[i].first << " " << this->graphPointsContainer[i].second << std::endl;
+		/*
+		Hai sa nu lucram ca si in java, please! Totusi, am pastra varianta veche aici:
+		-std::cout << this->m_Points.at(i).first << " " << this->m_Points.at(i).second << std::endl;
+		*/
 	}
 }
 
-
-
-void Graph::Setm_Points(std::vector<std::pair<double, double>>)
+std::vector<std::pair<double, double>>& Graph::Get_graphPointsContainer_by_reference()
 {
-
-}
-
-std::vector<std::pair<double, double>> Graph::Getm_Points()
-{
-	return this->m_Points ;
+	return this->graphPointsContainer;
 }
 
 Graph::~Graph()

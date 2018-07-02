@@ -1,0 +1,4 @@
+﻿  ProcessingUnit.cpp
+c:\users\razvan\documents\watersproject2018v1.1\graficewaters\graficewatersproject\processingunit.cpp(18): warning C4244: 'initializing': conversion from 'unsigned __int64' to 'double', possible loss of data
+c:\users\razvan\documents\watersproject2018v1.1\graficewaters\graficewatersproject\processingunit.cpp(20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  GraficeWatersProject.vcxproj -> C:\Users\Razvan\Documents\WatersProject2018v1.1\GraficeWaters\x64\Debug\GraficeWatersProject.exe
