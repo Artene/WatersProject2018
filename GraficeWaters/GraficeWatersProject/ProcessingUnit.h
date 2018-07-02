@@ -1,19 +1,19 @@
 #pragma once
 #include "Graph.h"
-#include <string> 
 class ProcessingUnit
 {
 private:
-	std::string m_NameOfFile;
-	Graph m_Graph;
+	Graph instanceOfGeneratedGraph;
 public:
 	ProcessingUnit();
-	ProcessingUnit(Graph,std::string);
-	//void Trim();
-	//void Attenuate();
-	//void CalculateArea();
+	ProcessingUnit(Graph inputGraph);
+	void Trim(double pointA,double pointB);
+	void Attenuate(); // atenuarea grafului
+	double MaximumSignalValueOfGraph();//valoarea maxima din vectoru de puncte
+	double MinimumSignalValueOfGraph();//valoarea minima din vectoru de puncte
+	double CalculateArea();
 	void Sum();
-	void WriteToFile();
+	void WriteToFile(std::string nameOfFile);
 	~ProcessingUnit();
 };
 

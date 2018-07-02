@@ -6,58 +6,59 @@ Generator::Generator()
 {
 }
 
-Generator::Generator(int NumberOfGeneratedNumbers,double MinimumLimit, double MaximumLimit,double ThresHoldSize)
+Generator::Generator(int inputNumberOfGeneratedPoints, double inputLowestLimitToGenerate, double inputHighestLimitToGenerate, double inputThresHoldLimitAtNumberGeneration)
 {
-	this->m_NumberOfGeneratedNumbers = NumberOfGeneratedNumbers;
-	this->m_MinimumLimit = MinimumLimit;
-	this->m_MaximumLimit = MaximumLimit;
-	this->m_ThresHoldSize=ThresHoldSize;
+	this->numberOfGeneratedPoints = inputNumberOfGeneratedPoints;
+	this->lowestLimitToGenerate = inputLowestLimitToGenerate;
+	this->highestLimitToGenerate = inputHighestLimitToGenerate;
+	this->thresHoldLimitAtNumberGeneration = inputThresHoldLimitAtNumberGeneration;
 }
 
 
 
-double Generator::Randomize(double InferiorLimit, double SuperiorLimit)
+double Generator::Randomize(double inferiorLimit, double superiorLimit)
 {
 	std::random_device rd; // obtain a random number from hardware
 	std::mt19937 eng(rd()); // seed the generator
-	std::uniform_int_distribution<> distr(InferiorLimit, SuperiorLimit); // define the range
+	std::uniform_int_distribution<> distr(inferiorLimit, superiorLimit); // define the range
 	return distr(eng);
-	
 }
 
-double Generator::ThresHold(double &PreviousInferiorLimitOfRandom, double &PreviousSuperiorLimitOfRandom, int ThresHoldSize, double MinimumLimit, double MaximumLimit)
+double Generator::ThresHold(double &previousInferiorLimitOfRandom, double &previousSuperiorLimitOfRandom, int inputThresHoldLimit, double inputLowestLimit, double inputHighestLimit)
 {
-	double RandomNumber;
+	double randomNumber;
 		
-		if (PreviousInferiorLimitOfRandom < MinimumLimit)
+	if (previousInferiorLimitOfRandom < inputLowestLimit)
+	{
+		previousInferiorLimitOfRandom = inputLowestLimit;
+		previousSuperiorLimitOfRandom = inputLowestLimit + inputThresHoldLimit;
+		randomNumber = Randomize(previousInferiorLimitOfRandom, previousSuperiorLimitOfRandom);
+	}
+	else {
+		if (previousSuperiorLimitOfRandom > inputHighestLimit)
 		{
-			PreviousInferiorLimitOfRandom = MinimumLimit;
-			PreviousSuperiorLimitOfRandom = MinimumLimit+ThresHoldSize;
-			RandomNumber = Randomize(PreviousInferiorLimitOfRandom, PreviousSuperiorLimitOfRandom);
-		}
-		else if (PreviousSuperiorLimitOfRandom>MaximumLimit)
-		{
-			PreviousInferiorLimitOfRandom = MaximumLimit-ThresHoldSize;
-			PreviousSuperiorLimitOfRandom = MaximumLimit;
-			RandomNumber = Randomize(PreviousInferiorLimitOfRandom, PreviousSuperiorLimitOfRandom);
+			previousInferiorLimitOfRandom = inputHighestLimit - inputThresHoldLimit;
+			previousSuperiorLimitOfRandom = inputHighestLimit;
+			randomNumber = Randomize(previousInferiorLimitOfRandom, previousSuperiorLimitOfRandom);
 		}
 		else
 		{
-			RandomNumber = Randomize(PreviousInferiorLimitOfRandom, PreviousSuperiorLimitOfRandom);
-			PreviousInferiorLimitOfRandom = RandomNumber - ThresHoldSize/2;
-			PreviousSuperiorLimitOfRandom = RandomNumber + ThresHoldSize/2;
+			randomNumber = Randomize(previousInferiorLimitOfRandom, previousSuperiorLimitOfRandom);
+			previousInferiorLimitOfRandom = randomNumber - inputThresHoldLimit / 2;
+			previousSuperiorLimitOfRandom = randomNumber + inputThresHoldLimit / 2;
 		}
-		return RandomNumber;
+	}
+	return randomNumber;
 }
 
 void Generator::WriteRandomNumberToFile()
 {
 	double YCoord;
-	double InferiorLimit=this->m_MinimumLimit;
-	double SuperiorLimit=this->m_MaximumLimit;
+	double InferiorLimit=this->lowestLimitToGenerate;
+	double SuperiorLimit=this->highestLimitToGenerate;
 	std::ofstream fout("GeneratedNumbers.txt");
-	for (int XCoord = 0; XCoord < this->m_NumberOfGeneratedNumbers; XCoord++) {
-		YCoord = ThresHold(InferiorLimit,SuperiorLimit,this->m_ThresHoldSize,this->m_MinimumLimit,this->m_MaximumLimit);
+	for (int XCoord = 0; XCoord < this->numberOfGeneratedPoints; XCoord++) {
+		YCoord = ThresHold(InferiorLimit,SuperiorLimit,this->thresHoldLimitAtNumberGeneration,this->lowestLimitToGenerate,this->highestLimitToGenerate);
 		fout << XCoord << " " << YCoord <<std::endl;
 	}
 	fout.close();

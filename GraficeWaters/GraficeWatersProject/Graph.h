@@ -1,26 +1,23 @@
 #pragma once
-//#include<list>
-#include<iostream>
+#include <iostream>
 #include <exception>
 #include <vector>
 #include <utility>
 #include <fstream>
+#include <string>
 
 class Graph
 {
 private:
-	//int m_NumberOfPoints;
-	std::vector<std::pair<double, double>> m_Points;
+	std::vector<std::pair<double, double>> graphPointsContainer;
 
 public:
 	Graph();
-	Graph(std::string);
-	//Graph(const Graph&);//copy constructor
+	Graph(std::string nameOfFile);
 	void DisplayOnScreen();
-	//void Setm_NumberOfGeneratedNumbers(int);
-	//int Getm_NumberOfGeneratedNumbers();
-	void Setm_Points(std::vector<std::pair<double, double>>);
-	std::vector<std::pair<double, double>> Getm_Points();
+	std::vector<std::pair<double, double>>& Get_graphPointsContainer_by_reference();
 	~Graph();
 };
-
+/* Reminders:
+ Graph.cpp are niste observatii care trebuie abordate, nu sterge acest comentariu pana nu sunt rezvate complet
+*/
