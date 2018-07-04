@@ -1,7 +1,5 @@
 #include "Generator.h"
 
-
-
 Generator::Generator()
 {
 }
@@ -14,13 +12,11 @@ Generator::Generator(int inputNumberOfGeneratedPoints, double inputLowestLimitTo
 	this->thresHoldLimitAtNumberGeneration = inputThresHoldLimitAtNumberGeneration;
 }
 
-
-
 double Generator::Randomize(double inferiorLimit, double superiorLimit)
 {
-	std::random_device rd; // obtain a random number from hardware
-	std::mt19937 eng(rd()); // seed the generator
-	std::uniform_int_distribution<> distr(inferiorLimit, superiorLimit); // define the range
+	std::random_device rd;
+	std::mt19937 eng(rd());
+	std::uniform_int_distribution<> distr(inferiorLimit, superiorLimit);
 	return distr(eng);
 }
 

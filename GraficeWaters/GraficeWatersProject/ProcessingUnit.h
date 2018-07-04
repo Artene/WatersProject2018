@@ -3,17 +3,16 @@
 class ProcessingUnit
 {
 private:
-	Graph instanceOfGeneratedGraph;
+	double m_area;
 public:
 	ProcessingUnit();
-	ProcessingUnit(Graph inputGraph);
-	void Trim(double pointA,double pointB);
-	void Attenuate(); // atenuarea grafului
-	double MaximumSignalValueOfGraph();//valoarea maxima din vectoru de puncte
-	double MinimumSignalValueOfGraph();//valoarea minima din vectoru de puncte
-	double CalculateArea();
-	void Sum();
-	void WriteToFile(std::string nameOfFile);
+	void Trim(Graph * pInGraph,Graph* pOutGraph,double pointA,double pointB);//sa fie date valide
+	void Attenuate( Graph * pInGraph,Graph* pOutGraph);
+	double CalculateArea(Graph * pInGraph);
+	void WriteToFile(Graph* pInGraph,std::string nameOfFile);
 	~ProcessingUnit();
+private:
+	double MaximumSignalValueOfGraph( Graph* pInGraph);
+	double MinimumSignalValueOfGraph( Graph* pInGraph);
 };
 

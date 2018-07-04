@@ -1,4 +1,9 @@
-﻿  ProcessingUnit.cpp
-c:\users\razvan\documents\watersproject2018v1.1\graficewaters\graficewatersproject\processingunit.cpp(18): warning C4244: 'initializing': conversion from 'unsigned __int64' to 'double', possible loss of data
-c:\users\razvan\documents\watersproject2018v1.1\graficewaters\graficewatersproject\processingunit.cpp(20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-  GraficeWatersProject.vcxproj -> C:\Users\Razvan\Documents\WatersProject2018v1.1\GraficeWaters\x64\Debug\GraficeWatersProject.exe
+﻿  Generator.cpp
+c:\users\acer\documents\github\watersproject2018\graficewatersproject\generator.cpp(23): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\acer\documents\github\watersproject2018\graficewatersproject\generator.cpp(61): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  Graph.cpp
+  ProcessingUnit.cpp
+c:\users\acer\documents\github\watersproject2018\graficewatersproject\processingunit.cpp(15): warning C4244: 'initializing': conversion from 'unsigned __int64' to 'double', possible loss of data
+c:\users\acer\documents\github\watersproject2018\graficewatersproject\processingunit.cpp(17): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  Generating Code...
+  GraficeWatersProject.vcxproj -> C:\Users\acer\Documents\GitHub\WatersProject2018\x64\Debug\GraficeWatersProject.exe

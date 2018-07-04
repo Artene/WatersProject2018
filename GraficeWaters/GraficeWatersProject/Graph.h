@@ -13,11 +13,8 @@ private:
 
 public:
 	Graph();
-	Graph(std::string nameOfFile);
+	void CreateGraph(std::string nameOfFile);
 	void DisplayOnScreen();
 	std::vector<std::pair<double, double>>& Get_graphPointsContainer_by_reference();
 	~Graph();
 };
-/* Reminders:
- Graph.cpp are niste observatii care trebuie abordate, nu sterge acest comentariu pana nu sunt rezvate complet
-*/
