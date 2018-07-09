@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/Images">
+        <file>floppy-512.png</file>
+        <file>New.ico</file>
+        <file>Windows-10-File-Explorer-icon.png</file>
+    </qresource>
+</RCC>
