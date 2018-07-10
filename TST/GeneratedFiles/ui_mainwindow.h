@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.11.1
+** Created by: Qt User Interface Compiler version 5.10.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,6 +12,8 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
@@ -42,12 +44,12 @@ public:
     QLineEdit *MinimumLimitTrim_LineEdit;
     QLabel *label_5;
     QLineEdit *MaximumLimitTrim_LineEdit;
-    QRadioButton *Attenuate_rd_button;
+    QRadioButton *radioButton_2;
     QLabel *label_7;
     QLineEdit *RangeAttenuate_LineEdit;
-    QRadioButton *Area_rd_button;
+    QRadioButton *radioButton;
     QLineEdit *AreaValue_LineEdit;
-    QPushButton *btn_process;
+    QPushButton *pushButton_2;
     QCustomPlot *customPlot_2;
     QWidget *layoutWidget1;
     QVBoxLayout *verticalLayout_2;
@@ -94,7 +96,7 @@ public:
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         customPlot = new QCustomPlot(centralWidget);
         customPlot->setObjectName(QStringLiteral("customPlot"));
-        customPlot->setGeometry(QRect(180, 10, 541, 251));
+        customPlot->setGeometry(QRect(150, 10, 541, 251));
         QPalette palette;
         QBrush brush(QColor(0, 0, 0, 255));
         brush.setStyle(Qt::SolidPattern);
@@ -188,10 +190,10 @@ public:
 
         verticalLayout->addWidget(MaximumLimitTrim_LineEdit);
 
-        Attenuate_rd_button = new QRadioButton(layoutWidget);
-        Attenuate_rd_button->setObjectName(QStringLiteral("Attenuate_rd_button"));
+        radioButton_2 = new QRadioButton(layoutWidget);
+        radioButton_2->setObjectName(QStringLiteral("radioButton_2"));
 
-        verticalLayout->addWidget(Attenuate_rd_button);
+        verticalLayout->addWidget(radioButton_2);
 
         label_7 = new QLabel(layoutWidget);
         label_7->setObjectName(QStringLiteral("label_7"));
@@ -204,10 +206,10 @@ public:
 
         verticalLayout->addWidget(RangeAttenuate_LineEdit);
 
-        Area_rd_button = new QRadioButton(layoutWidget);
-        Area_rd_button->setObjectName(QStringLiteral("Area_rd_button"));
+        radioButton = new QRadioButton(layoutWidget);
+        radioButton->setObjectName(QStringLiteral("radioButton"));
 
-        verticalLayout->addWidget(Area_rd_button);
+        verticalLayout->addWidget(radioButton);
 
         AreaValue_LineEdit = new QLineEdit(layoutWidget);
         AreaValue_LineEdit->setObjectName(QStringLiteral("AreaValue_LineEdit"));
@@ -216,10 +218,10 @@ public:
 
         verticalLayout->addWidget(AreaValue_LineEdit);
 
-        btn_process = new QPushButton(layoutWidget);
-        btn_process->setObjectName(QStringLiteral("btn_process"));
+        pushButton_2 = new QPushButton(layoutWidget);
+        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
 
-        verticalLayout->addWidget(btn_process);
+        verticalLayout->addWidget(pushButton_2);
 
         customPlot_2 = new QCustomPlot(centralWidget);
         customPlot_2->setObjectName(QStringLiteral("customPlot_2"));
@@ -367,10 +369,10 @@ public:
         Trim_rd_button->setText(QApplication::translate("MainWindow", "Trim", nullptr));
         label_6->setText(QApplication::translate("MainWindow", "Limita Minima:", nullptr));
         label_5->setText(QApplication::translate("MainWindow", "Limita Maxima: ", nullptr));
-        Attenuate_rd_button->setText(QApplication::translate("MainWindow", "Attenuate", nullptr));
+        radioButton_2->setText(QApplication::translate("MainWindow", "Attenuate", nullptr));
         label_7->setText(QApplication::translate("MainWindow", "Interval:", nullptr));
-        Area_rd_button->setText(QApplication::translate("MainWindow", "Area", nullptr));
-        btn_process->setText(QApplication::translate("MainWindow", "Process", nullptr));
+        radioButton->setText(QApplication::translate("MainWindow", "Area", nullptr));
+        pushButton_2->setText(QApplication::translate("MainWindow", "Process", nullptr));
         label->setText(QApplication::translate("MainWindow", "Nr. Puncte:", nullptr));
         label_2->setText(QApplication::translate("MainWindow", "Limita Minima:", nullptr));
         label_3->setText(QApplication::translate("MainWindow", "Limita Maxima: ", nullptr));
