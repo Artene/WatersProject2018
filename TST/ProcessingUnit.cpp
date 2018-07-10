@@ -8,31 +8,27 @@ ProcessingUnit::ProcessingUnit()
 void ProcessingUnit::Trim( Graph * pInGraph, Graph* pOutGraph, double pointA, double pointB)
 {
 	double MinimumValue = 0; 
-	pInGraph->Get_graphPointsContainer_by_reference();
+	//pInGraph->Get_graphPointsContainer_by_reference();
 	double MaximumValue = pInGraph->Get_graphPointsContainer_by_reference().size();
-	if (pointA >= MinimumValue && pointA <= MaximumValue && pointB >= MinimumValue && pointB <= MaximumValue && pointA <= pointB ) 
-		for (int i = pointA; i < pointB; i++)
+	if (pointA >= MinimumValue && pointA <= MaximumValue && pointB >= MinimumValue && pointB < MaximumValue && pointA <= pointB ) 
+		for (int i = pointA; i <= pointB; i++)
 			pOutGraph->Get_graphPointsContainer_by_reference().push_back(std::make_pair(pInGraph->Get_graphPointsContainer_by_reference()[i].first, pInGraph->Get_graphPointsContainer_by_reference()[i].second));
 			
 }
 
-void ProcessingUnit::Attenuate( Graph * pInGraph, Graph* pOutGraph, int IntervalNormalization)
+void ProcessingUnit::Attenuate( Graph * pInGraph, Graph* pOutGraph, double Percentage)
 {
-	int NormalizationInferiorLimit = 1;
-	int NormalizationSuperiorLimit = IntervalNormalization;
-	double MaximumValueOfGraph = this->MaximumSignalValueOfGraph(pInGraph);
-	double MinimumValueOfGraph = this->MinimumSignalValueOfGraph(pInGraph);
 	for (int i = 0; i < pInGraph->Get_graphPointsContainer_by_reference().size(); i++) {
 		std::pair<double,double> aux;
 		aux.first = i;
 		aux.second = 0;
 		pOutGraph->Get_graphPointsContainer_by_reference().push_back(aux);
-		
-		pOutGraph->Get_graphPointsContainer_by_reference()[i].second =
-			(NormalizationInferiorLimit +
+		double auxValue = pInGraph->Get_graphPointsContainer_by_reference()[i].second;
+		pOutGraph->Get_graphPointsContainer_by_reference()[i].second = (auxValue*Percentage) / 100;
+			/*(NormalizationInferiorLimit +
 			(pInGraph->Get_graphPointsContainer_by_reference()[i].second - MinimumValueOfGraph)*
 				(NormalizationSuperiorLimit - NormalizationInferiorLimit)) /
-				(MaximumValueOfGraph - MinimumValueOfGraph);
+				(MaximumValueOfGraph - MinimumValueOfGraph);*/
 		
 	}
 }
