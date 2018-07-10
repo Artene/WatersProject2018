@@ -75,22 +75,35 @@ void MainWindow::CreatePictureOfGraph(int & nrPoze,QString graph)
 
 void MainWindow::on_btn_generate_clicked()
 {
-	Scanner Writer;
-	Generator Calin(ui->PointsNumberMax_LineEdit_int->text().toInt(), ui->InferiorLimit_LineEdit->text().toDouble(), ui->SuperiorLimit_LineEdit->text().toDouble(), ui->Threshold_LineEdit->text().toInt());
-	Writer.Write(Calin.GenerateNumbers(), "GeneratedNumbers.dat");
-	Writer.ReadGraphics(this->xCoord, this->yCoord, "GeneratedNumbers.dat");
+	bool Validator=true;
+	if (ui->InferiorLimit_LineEdit->text().isEmpty())Validator = false;
+	else if (ui->SuperiorLimit_LineEdit->text().isEmpty())  Validator = false;
+	else if (ui->InferiorLimit_LineEdit->text().toDouble() > ui->SuperiorLimit_LineEdit->text().toDouble()) Validator = false;
+	else if (ui->PointsNumberMax_LineEdit_int->text().isEmpty()) Validator = false;
+	else if (ui->Threshold_LineEdit->text().isEmpty()) Validator = false;
+	if (Validator == true)
+	{
+		Scanner Writer;
+		Generator Calin(ui->PointsNumberMax_LineEdit_int->text().toInt(), ui->InferiorLimit_LineEdit->text().toDouble(), ui->SuperiorLimit_LineEdit->text().toDouble(), ui->Threshold_LineEdit->text().toInt());
+		Writer.Write(Calin.GenerateNumbers(), "GeneratedNumbers.dat");
+		Writer.ReadGraphics(this->xCoord, this->yCoord, "GeneratedNumbers.dat");
 
-    ui->customPlot->addGraph();
-    ui->customPlot->graph(0)->setPen(QPen(Qt::blue));
-    ui->customPlot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20))); 
-    ui->customPlot->addGraph();
-    ui->customPlot->graph(0)->setChannelFillGraph(ui->customPlot->graph(1));
-	ui->customPlot->xAxis->setRange(0, ui->PointsNumberMax_LineEdit_int->text().toInt());
-	ui->customPlot->yAxis->setRange(ui->InferiorLimit_LineEdit->text().toInt(), ui->SuperiorLimit_LineEdit->text().toDouble());
-    ui->customPlot->graph(0)->setData(this->xCoord, this->yCoord);
-    ui->customPlot->replot();
-
-	
+		ui->customPlot->addGraph();
+		ui->customPlot->graph(0)->setPen(QPen(Qt::blue));
+		ui->customPlot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
+		ui->customPlot->addGraph();
+		ui->customPlot->graph(0)->setChannelFillGraph(ui->customPlot->graph(1));
+		ui->customPlot->xAxis->setRange(0, ui->PointsNumberMax_LineEdit_int->text().toInt());
+		ui->customPlot->yAxis->setRange(ui->InferiorLimit_LineEdit->text().toInt(), ui->SuperiorLimit_LineEdit->text().toDouble());
+		ui->customPlot->graph(0)->setData(this->xCoord, this->yCoord);
+		ui->customPlot->replot();
+	}
+	else
+	{
+		QVector<double> resetX, resetY;
+		ui->customPlot->graph(0)->setData(resetX, resetY);
+		ui->customPlot->replot();
+	}
 	
 
 }
