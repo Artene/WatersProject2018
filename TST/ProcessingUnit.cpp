@@ -10,8 +10,8 @@ void ProcessingUnit::Trim( Graph * pInGraph, Graph* pOutGraph, double pointA, do
 	double MinimumValue = 0; 
 	pInGraph->Get_graphPointsContainer_by_reference();
 	double MaximumValue = pInGraph->Get_graphPointsContainer_by_reference().size();
-	if (pointA >= MinimumValue && pointA <= MaximumValue && pointB >= MinimumValue && pointB <= MaximumValue && pointA <= pointB)
-		for (int i = pointA; i <= pointB; i++)
+	if (pointA >= MinimumValue && pointA <= MaximumValue && pointB >= MinimumValue && pointB <= MaximumValue && pointA <= pointB ) 
+		for (int i = pointA; i < pointB; i++)
 			pOutGraph->Get_graphPointsContainer_by_reference().push_back(std::make_pair(pInGraph->Get_graphPointsContainer_by_reference()[i].first, pInGraph->Get_graphPointsContainer_by_reference()[i].second));
 			
 }
