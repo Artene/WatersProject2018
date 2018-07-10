@@ -29,6 +29,14 @@ std::vector<std::pair<double, double>>& Graph::Get_graphPointsContainer_by_refer
 	return this->graphPointsContainer;
 }
 
+void Graph::Set_graphPointsContainter(QVector<double>& xCoord, QVector<double>& yCoord)
+{
+	for (int i = 0; i < yCoord.size(); i++)
+	{
+		this->graphPointsContainer.push_back(std::make_pair(xCoord[i], yCoord[i]));
+	}
+}
+
 Graph::~Graph()
 {
 }

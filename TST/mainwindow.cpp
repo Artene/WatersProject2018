@@ -41,10 +41,9 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->Threshold_LineEdit->setValidator(new QIntValidator(0, 1000000, this));
 	ui->MinimumLimitTrim_LineEdit->setValidator(new QIntValidator(0, 1000000, this));
 	ui->MaximumLimitTrim_LineEdit->setValidator(new QIntValidator(0, 1000000, this));
-	ui->RangeAttenuate_LineEdit->setValidator(new QIntValidator(0, 1000000, this));
+//	ui->RangeAttenuate_LineEdit->setValidator(new QIntValidator(0, 1000000, this));
 	
-	
-
+	//QSlider horizontalSlider();
 	
 }
 
@@ -75,6 +74,8 @@ void MainWindow::CreatePictureOfGraph(int & nrPoze,QString graph)
 
 void MainWindow::on_btn_generate_clicked()
 {
+	if (ui->PointsNumberMax_LineEdit_int->text().isEmpty())
+		delete ui;
 	Scanner Writer;
 	Generator Calin(ui->PointsNumberMax_LineEdit_int->text().toInt(), ui->InferiorLimit_LineEdit->text().toDouble(), ui->SuperiorLimit_LineEdit->text().toDouble(), ui->Threshold_LineEdit->text().toInt());
 	Writer.Write(Calin.GenerateNumbers(), "GeneratedNumbers.dat");
@@ -103,7 +104,8 @@ void MainWindow::on_pushButton_2_clicked()
 
 	Scanner Writer;
 	Graph Sorin;
-	Writer.Read(&Sorin, "GeneratedNumbers.dat");
+	//Writer.Read(&Sorin, "GeneratedNumbers.dat");
+	Sorin.Set_graphPointsContainter(xCoord, yCoord);
 	ProcessingUnit Izabela;
     if(ui->Trim_rd_button->isChecked())
     {
@@ -118,7 +120,7 @@ void MainWindow::on_pushButton_2_clicked()
          ui->customPlot_2->replot();
     }
 
-    else if(ui->radioButton_2->isChecked())
+   /* else if(ui->radioButton_2->isChecked())
     {
 		Graph Attenuated;
 		Izabela.Attenuate(&Sorin, &Attenuated, ui->RangeAttenuate_LineEdit->text().toInt());
@@ -130,7 +132,7 @@ void MainWindow::on_pushButton_2_clicked()
         ui->customPlot_2->graph(0)->setData(xCoord, yCoord);
         ui->customPlot_2->replot();
 
-    }
+    }*/
 	else if (ui->radioButton->isChecked())
 	{
 		QString ValoareArie = QString::number(Izabela.CalculateArea(&Sorin),'g',6);
@@ -156,4 +158,22 @@ void MainWindow::on_actionSave_triggered()
 	CreatePictureOfGraph(nrPoze, "graphGen");
 	CreatePictureOfGraph(nrPoze, "graphProc");
     
+}
+
+void MainWindow::on_horizontalSlider_valueChanged(int value)
+{
+	Scanner Writer;
+	Graph Sorin;
+	Writer.Read(&Sorin, "GeneratedNumbers.dat");
+	//Sorin.Set_graphPointsContainter(xCoord, yCoord);
+	ProcessingUnit Izabela;
+	Graph Attenuated;
+	Izabela.Attenuate(&Sorin, &Attenuated, value);
+	Writer.Write(Attenuated, "GraphAttenuated.dat");
+	Writer.ReadGraphics(xCoord, yCoord, "GraphAttenuated.dat");
+
+	ui->customPlot_2->xAxis->setRange(0, ui->PointsNumberMax_LineEdit_int->text().toInt());
+	ui->customPlot_2->yAxis->setRange(ui->InferiorLimit_LineEdit->text().toInt(), ui->SuperiorLimit_LineEdit->text().toDouble());
+	ui->customPlot_2->graph(0)->setData(xCoord, yCoord);
+	ui->customPlot_2->replot();
 }
