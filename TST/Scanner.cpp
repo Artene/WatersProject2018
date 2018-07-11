@@ -17,6 +17,7 @@ void Scanner::Read(Graph * pOutGraph,  std::string nameOfFile)
 	int vctSize;
 	fin.seekg(0, std::ifstream::end);
 	vctSize = fin.tellg();
+	pOutGraph->Get_graphPointsContainer_by_reference().clear();
 	pOutGraph->Get_graphPointsContainer_by_reference().reserve(vctSize / sizeof(std::pair<double, double>));
 	fin.seekg(0, std::ifstream::beg);
 	char *pReadBuffer = new char[vctSize];
@@ -26,10 +27,10 @@ void Scanner::Read(Graph * pOutGraph,  std::string nameOfFile)
 	for (int i = 0; i < pOutGraph->Get_graphPointsContainer_by_reference().capacity(); ++i)
 	{
 		pOutGraph->Get_graphPointsContainer_by_reference().push_back(pReintVect[i]);
-			}
+	}
 }
 
-void Scanner::ReadGraphics(QVector<double>& xCoord, QVector<double>& yCoord, std::string nameOfFile)
+void Scanner::ReadGraphics_2(QVector<double>& xCoord, QVector<double>& yCoord, std::string nameOfFile)
 {
 	xCoord.clear();
 	yCoord.clear();
@@ -51,7 +52,17 @@ void Scanner::ReadGraphics(QVector<double>& xCoord, QVector<double>& yCoord, std
 		yCoord.append(pOutGraph.Get_graphPointsContainer_by_reference()[i].second);
 	}
 }
+void Scanner::ReadGraphics(QVector<double>& xCoord, QVector<double>& yCoord, Graph *graph)
+{
+	xCoord.clear();
+	yCoord.clear();
 
+	for (int i = 0; i < graph->Get_graphPointsContainer_by_reference().size(); ++i)
+	{
+		xCoord.append(graph->Get_graphPointsContainer_by_reference()[i].first);
+		yCoord.append(graph->Get_graphPointsContainer_by_reference()[i].second);
+	}
+}
 Scanner::Scanner()
 {
 }

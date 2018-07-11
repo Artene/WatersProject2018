@@ -6,6 +6,8 @@
 #include <fstream>
 #include <string>
 
+#include<qvector.h>
+
 class Graph
 {
 private:
@@ -16,5 +18,6 @@ public:
 	void CreateGraph(std::string nameOfFile);
 	void DisplayOnScreen();
 	std::vector<std::pair<double, double>>& Get_graphPointsContainer_by_reference();
+	void Set_graphPointsContainter(Graph Graphic);
 	~Graph();
 };

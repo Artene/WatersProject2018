@@ -19,6 +19,7 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
+#include <QtWidgets/QSlider>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -42,9 +43,8 @@ public:
     QLineEdit *MinimumLimitTrim_LineEdit;
     QLabel *label_5;
     QLineEdit *MaximumLimitTrim_LineEdit;
-    QRadioButton *radioButton_2;
-    QLabel *label_7;
-    QLineEdit *RangeAttenuate_LineEdit;
+    QLabel *label_8;
+    QSlider *horizontalSlider;
     QRadioButton *radioButton;
     QLineEdit *AreaValue_LineEdit;
     QPushButton *pushButton_2;
@@ -155,7 +155,7 @@ public:
         customPlot->setAutoFillBackground(true);
         layoutWidget = new QWidget(centralWidget);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 270, 111, 270));
+        layoutWidget->setGeometry(QRect(10, 270, 111, 261));
         verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -188,21 +188,19 @@ public:
 
         verticalLayout->addWidget(MaximumLimitTrim_LineEdit);
 
-        radioButton_2 = new QRadioButton(layoutWidget);
-        radioButton_2->setObjectName(QStringLiteral("radioButton_2"));
+        label_8 = new QLabel(layoutWidget);
+        label_8->setObjectName(QStringLiteral("label_8"));
 
-        verticalLayout->addWidget(radioButton_2);
+        verticalLayout->addWidget(label_8);
 
-        label_7 = new QLabel(layoutWidget);
-        label_7->setObjectName(QStringLiteral("label_7"));
+        horizontalSlider = new QSlider(layoutWidget);
+        horizontalSlider->setObjectName(QStringLiteral("horizontalSlider"));
+        horizontalSlider->setMaximum(100);
+        horizontalSlider->setSingleStep(10);
+        horizontalSlider->setSliderPosition(50);
+        horizontalSlider->setOrientation(Qt::Horizontal);
 
-        verticalLayout->addWidget(label_7);
-
-        RangeAttenuate_LineEdit = new QLineEdit(layoutWidget);
-        RangeAttenuate_LineEdit->setObjectName(QStringLiteral("RangeAttenuate_LineEdit"));
-        RangeAttenuate_LineEdit->setInputMethodHints(Qt::ImhDigitsOnly);
-
-        verticalLayout->addWidget(RangeAttenuate_LineEdit);
+        verticalLayout->addWidget(horizontalSlider);
 
         radioButton = new QRadioButton(layoutWidget);
         radioButton->setObjectName(QStringLiteral("radioButton"));
@@ -332,7 +330,7 @@ public:
         customPlot_2->raise();
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 717, 21));
+        menuBar->setGeometry(QRect(0, 0, 717, 26));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         menuView = new QMenu(menuBar);
@@ -367,8 +365,7 @@ public:
         Trim_rd_button->setText(QApplication::translate("MainWindow", "Trim", nullptr));
         label_6->setText(QApplication::translate("MainWindow", "Limita Minima:", nullptr));
         label_5->setText(QApplication::translate("MainWindow", "Limita Maxima: ", nullptr));
-        radioButton_2->setText(QApplication::translate("MainWindow", "Attenuate", nullptr));
-        label_7->setText(QApplication::translate("MainWindow", "Interval:", nullptr));
+        label_8->setText(QApplication::translate("MainWindow", "Attenuate:", nullptr));
         radioButton->setText(QApplication::translate("MainWindow", "Area", nullptr));
         pushButton_2->setText(QApplication::translate("MainWindow", "Process", nullptr));
         label->setText(QApplication::translate("MainWindow", "Nr. Puncte:", nullptr));
