@@ -85,8 +85,9 @@ void MainWindow::on_btn_generate_clicked()
 		Scanner Writer;
 		Generator Calin(ui->PointsNumberMax_LineEdit_int->text().toInt(), ui->InferiorLimit_LineEdit->text().toDouble(), ui->SuperiorLimit_LineEdit->text().toDouble(), ui->Threshold_LineEdit->text().toInt());
 		Writer.Write(Calin.GenerateNumbers(), "GeneratedNumbers.dat");
+		Writer.Read(&Sorin, "GeneratedNumbers.dat");
 		Writer.ReadGraphics(this->xCoord, this->yCoord, "GeneratedNumbers.dat");
-
+		ui->pushButton_2->setEnabled(true);
 		ui->customPlot->addGraph();
 		ui->customPlot->graph(0)->setPen(QPen(Qt::blue));
 		ui->customPlot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
@@ -96,6 +97,7 @@ void MainWindow::on_btn_generate_clicked()
 		ui->customPlot->yAxis->setRange(ui->InferiorLimit_LineEdit->text().toInt(), ui->SuperiorLimit_LineEdit->text().toDouble());
 		ui->customPlot->graph(0)->setData(this->xCoord, this->yCoord);
 		ui->customPlot->replot();
+		
 	}
 	else
 	{
@@ -112,9 +114,9 @@ void MainWindow::on_pushButton_2_clicked()
 {
 
 	Scanner Writer;
-	Graph Sorin;
-	Writer.Read(&Sorin, "GeneratedNumbers.dat");
-	//Sorin.Set_graphPointsContainter(xCoord, yCoord); -> se face trim pe graful atenuat + crapa in anumite cazuri trimul
+	//Graph Sorin;
+	//Writer.Read(&Sorin, "GeneratedNumbers.dat");
+	//Sorin.Set_graphPointsContainter(xCoord, yCoord); //-> se face trim pe graful atenuat + crapa in anumite cazuri trimul
 	ProcessingUnit Izabela;
 	if (ui->Trim_rd_button->isChecked())
 	{
@@ -174,18 +176,11 @@ void MainWindow::on_pushButton_2_clicked()
 	}
 }
 
-void MainWindow::on_actionSave_triggered()
-{
-	CreatePictureOfGraph(nrPoze, "graphGen");
-	CreatePictureOfGraph(nrPoze, "graphProc");
-    
-}
-
 void MainWindow::on_horizontalSlider_valueChanged(int value)
 {
 	Scanner Writer;
-	Graph Sorin;
-	Writer.Read(&Sorin, "GeneratedNumbers.dat");
+	// Sorin;
+	//Writer.Read(&Sorin, "GeneratedNumbers.dat");
 	//Sorin.Set_graphPointsContainter(xCoord, yCoord);
 	ProcessingUnit Izabela;
 	Graph Attenuated;
@@ -198,3 +193,67 @@ void MainWindow::on_horizontalSlider_valueChanged(int value)
 	ui->customPlot_2->graph(0)->setData(xCoord, yCoord);
 	ui->customPlot_2->replot();
 }
+void MainWindow::on_actionSave_triggered()
+{
+	CreatePictureOfGraph(nrPoze, "graphGen");
+	CreatePictureOfGraph(nrPoze, "graphProc");
+
+}
+
+void MainWindow::on_actionNew_triggered()
+{
+	ui->customPlot->graph(0)->data()->clear();
+	ui->customPlot->replot();
+
+	ui->customPlot_2->graph(0)->data()->clear();
+	ui->customPlot_2->replot();
+
+	ui->SuperiorLimit_LineEdit->clear();
+	ui->PointsNumberMax_LineEdit_int->clear();
+	ui->InferiorLimit_LineEdit->clear();
+	ui->Threshold_LineEdit->clear();
+
+	ui->MinimumLimitTrim_LineEdit->clear();
+	ui->MaximumLimitTrim_LineEdit->clear();
+	ui->AreaValue_LineEdit->clear();
+
+	ui->Trim_rd_button->setAutoExclusive(false);
+	ui->radioButton->setAutoExclusive(false);
+
+	ui->Trim_rd_button->setChecked(false);
+	ui->radioButton->setChecked(false);
+
+
+
+}
+
+void MainWindow::on_actionClose_triggered()
+{
+	QApplication::quit();
+}
+
+void MainWindow::on_actionOpen_triggered()
+{
+	QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), QDir::currentPath(), "Data(*.dat)");
+	std::string file = filename.toUtf8().constData();
+	//QDesktopServices::openUrl( QUrl::fromLocalFile(filename) );
+	if (!file.empty()) {
+		Scanner Writer;
+		Writer.ReadGraphics(this->xCoord, this->yCoord, file);
+		ui->pushButton_2->setEnabled(false);
+		ui->customPlot->addGraph();
+		ui->customPlot->graph(0)->setPen(QPen(Qt::blue));
+		ui->customPlot->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
+		ui->customPlot->addGraph();
+		ui->customPlot->graph(0)->setChannelFillGraph(ui->customPlot->graph(1));
+		ui->customPlot->xAxis->setRange(0, ui->PointsNumberMax_LineEdit_int->text().toInt());
+		ui->customPlot->yAxis->setRange(ui->InferiorLimit_LineEdit->text().toInt(), ui->SuperiorLimit_LineEdit->text().toDouble());
+		ui->customPlot->graph(0)->setData(this->xCoord, this->yCoord);
+		ui->customPlot->replot();
+		QVector<double> resetX, resetY;
+		ui->customPlot_2->graph(0)->setData(resetX, resetY);
+		ui->customPlot_2->replot();
+	}
+
+}
+

@@ -16,7 +16,7 @@ void ProcessingUnit::Trim( Graph * pInGraph, Graph* pOutGraph, double pointA, do
 			
 }
 
-void ProcessingUnit::Attenuate( Graph * pInGraph, Graph* pOutGraph, double Percentage)
+void ProcessingUnit::Attenuate( Graph  *pInGraph, Graph* pOutGraph, double Percentage)
 {
 	for (int i = 0; i < pInGraph->Get_graphPointsContainer_by_reference().size(); i++) {
 		std::pair<double,double> aux;
