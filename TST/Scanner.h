@@ -7,7 +7,9 @@ class Scanner
 public:
 	void Write(Graph pInGraph,std::string nameOfFile);// asta in fisier
 	void Read(Graph * pOutGraph, std::string nameOfFile); // citit din fisier + restore
-	void ReadGraphics(QVector<double>& xCoord, QVector<double>& yCoord, std::string nameOfFile);
+	void ReadGraphics(QVector<double>& xCoord, QVector<double>& yCoord, Graph *graph);	
+	void ReadGraphics_2(QVector<double>& xCoord, QVector<double>& yCoord, std::string nameOfFile);
+
 	Scanner();
 	~Scanner();
 };
