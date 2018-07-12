@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>717</width>
-    <height>607</height>
+    <height>700</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>717</width>
-    <height>607</height>
+    <height>700</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>717</width>
-    <height>607</height>
+    <height>700</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -463,7 +463,7 @@
       <x>10</x>
       <y>270</y>
       <width>111</width>
-      <height>270</height>
+      <height>327</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -503,23 +503,25 @@
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="radioButton_2">
+      <widget class="QLabel" name="label_8">
        <property name="text">
-        <string>Attenuate</string>
+        <string>Attenuate:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label_7">
-       <property name="text">
-        <string>Interval:</string>
+      <widget class="QSlider" name="horizontalSlider">
+       <property name="maximum">
+        <number>100</number>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="RangeAttenuate_LineEdit">
-       <property name="inputMethodHints">
-        <set>Qt::ImhDigitsOnly</set>
+       <property name="singleStep">
+        <number>10</number>
+       </property>
+       <property name="sliderPosition">
+        <number>50</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
       </widget>
      </item>
@@ -1047,7 +1049,7 @@
      <x>0</x>
      <y>0</y>
      <width>717</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1062,13 +1064,7 @@
     <addaction name="separator"/>
     <addaction name="actionClose"/>
    </widget>
-   <widget class="QMenu" name="menuView">
-    <property name="title">
-     <string>View</string>
-    </property>
-   </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuView"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew">
