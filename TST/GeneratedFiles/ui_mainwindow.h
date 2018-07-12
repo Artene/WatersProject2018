@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
@@ -21,6 +22,7 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
+#include <QtWidgets/QSlider>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -44,9 +46,8 @@ public:
     QLineEdit *MinimumLimitTrim_LineEdit;
     QLabel *label_5;
     QLineEdit *MaximumLimitTrim_LineEdit;
-    QRadioButton *radioButton_2;
-    QLabel *label_7;
-    QLineEdit *RangeAttenuate_LineEdit;
+    QLabel *label_8;
+    QSlider *horizontalSlider;
     QRadioButton *radioButton;
     QLineEdit *AreaValue_LineEdit;
     QPushButton *pushButton_2;
@@ -61,42 +62,47 @@ public:
     QLineEdit *SuperiorLimit_LineEdit;
     QLabel *label_4;
     QLineEdit *Threshold_LineEdit;
+    QCheckBox *checkBox_Threads;
+    QLabel *label_7;
+    QLineEdit *NumberOfGraphics_LineEdit;
     QPushButton *btn_generate;
     QMenuBar *menuBar;
     QMenu *menuFile;
-    QMenu *menuView;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(717, 607);
-        MainWindow->setMinimumSize(QSize(717, 607));
-        MainWindow->setMaximumSize(QSize(717, 607));
+        MainWindow->resize(717, 610);
+        MainWindow->setMinimumSize(QSize(717, 610));
+        MainWindow->setMaximumSize(QSize(717, 610));
+        QIcon icon;
+        icon.addFile(QStringLiteral("4.png"), QSize(), QIcon::Normal, QIcon::Off);
+        MainWindow->setWindowIcon(icon);
         MainWindow->setAutoFillBackground(false);
         actionNew = new QAction(MainWindow);
         actionNew->setObjectName(QStringLiteral("actionNew"));
-        QIcon icon;
-        icon.addFile(QStringLiteral(":/Images/New.ico"), QSize(), QIcon::Normal, QIcon::Off);
-        actionNew->setIcon(icon);
+        QIcon icon1;
+        icon1.addFile(QStringLiteral(":/Images/New.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        actionNew->setIcon(icon1);
         actionOpen = new QAction(MainWindow);
         actionOpen->setObjectName(QStringLiteral("actionOpen"));
-        QIcon icon1;
-        icon1.addFile(QStringLiteral(":/Images/Windows-10-File-Explorer-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionOpen->setIcon(icon1);
+        QIcon icon2;
+        icon2.addFile(QStringLiteral(":/Images/Windows-10-File-Explorer-icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionOpen->setIcon(icon2);
         actionSave = new QAction(MainWindow);
         actionSave->setObjectName(QStringLiteral("actionSave"));
-        QIcon icon2;
-        icon2.addFile(QStringLiteral(":/Images/floppy-512.png"), QSize(), QIcon::Normal, QIcon::Off);
-        actionSave->setIcon(icon2);
+        QIcon icon3;
+        icon3.addFile(QStringLiteral(":/Images/floppy-512.png"), QSize(), QIcon::Normal, QIcon::Off);
+        actionSave->setIcon(icon3);
         actionClose = new QAction(MainWindow);
         actionClose->setObjectName(QStringLiteral("actionClose"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         customPlot = new QCustomPlot(centralWidget);
         customPlot->setObjectName(QStringLiteral("customPlot"));
-        customPlot->setGeometry(QRect(150, 10, 541, 251));
+        customPlot->setGeometry(QRect(150, 20, 541, 251));
         QPalette palette;
         QBrush brush(QColor(0, 0, 0, 255));
         brush.setStyle(Qt::SolidPattern);
@@ -157,7 +163,7 @@ public:
         customPlot->setAutoFillBackground(true);
         layoutWidget = new QWidget(centralWidget);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 270, 111, 270));
+        layoutWidget->setGeometry(QRect(10, 300, 111, 261));
         verticalLayout = new QVBoxLayout(layoutWidget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -190,21 +196,19 @@ public:
 
         verticalLayout->addWidget(MaximumLimitTrim_LineEdit);
 
-        radioButton_2 = new QRadioButton(layoutWidget);
-        radioButton_2->setObjectName(QStringLiteral("radioButton_2"));
+        label_8 = new QLabel(layoutWidget);
+        label_8->setObjectName(QStringLiteral("label_8"));
 
-        verticalLayout->addWidget(radioButton_2);
+        verticalLayout->addWidget(label_8);
 
-        label_7 = new QLabel(layoutWidget);
-        label_7->setObjectName(QStringLiteral("label_7"));
+        horizontalSlider = new QSlider(layoutWidget);
+        horizontalSlider->setObjectName(QStringLiteral("horizontalSlider"));
+        horizontalSlider->setMaximum(100);
+        horizontalSlider->setSingleStep(10);
+        horizontalSlider->setSliderPosition(50);
+        horizontalSlider->setOrientation(Qt::Horizontal);
 
-        verticalLayout->addWidget(label_7);
-
-        RangeAttenuate_LineEdit = new QLineEdit(layoutWidget);
-        RangeAttenuate_LineEdit->setObjectName(QStringLiteral("RangeAttenuate_LineEdit"));
-        RangeAttenuate_LineEdit->setInputMethodHints(Qt::ImhDigitsOnly);
-
-        verticalLayout->addWidget(RangeAttenuate_LineEdit);
+        verticalLayout->addWidget(horizontalSlider);
 
         radioButton = new QRadioButton(layoutWidget);
         radioButton->setObjectName(QStringLiteral("radioButton"));
@@ -225,7 +229,7 @@ public:
 
         customPlot_2 = new QCustomPlot(centralWidget);
         customPlot_2->setObjectName(QStringLiteral("customPlot_2"));
-        customPlot_2->setGeometry(QRect(150, 280, 541, 251));
+        customPlot_2->setGeometry(QRect(150, 300, 541, 251));
         QPalette palette1;
         palette1.setBrush(QPalette::Active, QPalette::WindowText, brush);
         palette1.setBrush(QPalette::Active, QPalette::Button, brush1);
@@ -276,7 +280,7 @@ public:
         customPlot_2->setAutoFillBackground(true);
         layoutWidget1 = new QWidget(centralWidget);
         layoutWidget1->setObjectName(QStringLiteral("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(10, 0, 111, 251));
+        layoutWidget1->setGeometry(QRect(10, 0, 111, 289));
         verticalLayout_2 = new QVBoxLayout(layoutWidget1);
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setContentsMargins(11, 11, 11, 11);
@@ -322,6 +326,21 @@ public:
 
         verticalLayout_2->addWidget(Threshold_LineEdit);
 
+        checkBox_Threads = new QCheckBox(layoutWidget1);
+        checkBox_Threads->setObjectName(QStringLiteral("checkBox_Threads"));
+
+        verticalLayout_2->addWidget(checkBox_Threads);
+
+        label_7 = new QLabel(layoutWidget1);
+        label_7->setObjectName(QStringLiteral("label_7"));
+
+        verticalLayout_2->addWidget(label_7);
+
+        NumberOfGraphics_LineEdit = new QLineEdit(layoutWidget1);
+        NumberOfGraphics_LineEdit->setObjectName(QStringLiteral("NumberOfGraphics_LineEdit"));
+
+        verticalLayout_2->addWidget(NumberOfGraphics_LineEdit);
+
         btn_generate = new QPushButton(layoutWidget1);
         btn_generate->setObjectName(QStringLiteral("btn_generate"));
 
@@ -334,18 +353,15 @@ public:
         customPlot_2->raise();
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 717, 21));
+        menuBar->setGeometry(QRect(0, 0, 717, 26));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
-        menuView = new QMenu(menuBar);
-        menuView->setObjectName(QStringLiteral("menuView"));
         MainWindow->setMenuBar(menuBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         MainWindow->setStatusBar(statusBar);
 
         menuBar->addAction(menuFile->menuAction());
-        menuBar->addAction(menuView->menuAction());
         menuFile->addAction(actionNew);
         menuFile->addSeparator();
         menuFile->addAction(actionOpen);
@@ -361,7 +377,7 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "App", nullptr));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Graph Generator", nullptr));
         actionNew->setText(QApplication::translate("MainWindow", "New", nullptr));
         actionOpen->setText(QApplication::translate("MainWindow", "Open", nullptr));
         actionSave->setText(QApplication::translate("MainWindow", "Save", nullptr));
@@ -369,17 +385,17 @@ public:
         Trim_rd_button->setText(QApplication::translate("MainWindow", "Trim", nullptr));
         label_6->setText(QApplication::translate("MainWindow", "Limita Minima:", nullptr));
         label_5->setText(QApplication::translate("MainWindow", "Limita Maxima: ", nullptr));
-        radioButton_2->setText(QApplication::translate("MainWindow", "Attenuate", nullptr));
-        label_7->setText(QApplication::translate("MainWindow", "Interval:", nullptr));
+        label_8->setText(QApplication::translate("MainWindow", "Attenuate:", nullptr));
         radioButton->setText(QApplication::translate("MainWindow", "Area", nullptr));
         pushButton_2->setText(QApplication::translate("MainWindow", "Process", nullptr));
         label->setText(QApplication::translate("MainWindow", "Nr. Puncte:", nullptr));
         label_2->setText(QApplication::translate("MainWindow", "Limita Minima:", nullptr));
         label_3->setText(QApplication::translate("MainWindow", "Limita Maxima: ", nullptr));
         label_4->setText(QApplication::translate("MainWindow", "Threshold:", nullptr));
+        checkBox_Threads->setText(QApplication::translate("MainWindow", "Auto Mode", nullptr));
+        label_7->setText(QApplication::translate("MainWindow", "Nr. Grafice", nullptr));
         btn_generate->setText(QApplication::translate("MainWindow", "Generate", nullptr));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", nullptr));
-        menuView->setTitle(QApplication::translate("MainWindow", "View", nullptr));
     } // retranslateUi
 
 };

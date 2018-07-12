@@ -29,6 +29,13 @@ std::vector<std::pair<double, double>>& Graph::Get_graphPointsContainer_by_refer
 	return this->graphPointsContainer;
 }
 
+void Graph::Set_graphPointsContainter(Graph Graphic)
+{
+
+		this->graphPointsContainer=Graphic.Get_graphPointsContainer_by_reference();
+
+}
+
 Graph::~Graph()
 {
 }

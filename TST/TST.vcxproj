@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{8D006324-FFD2-3A5B-9DE6-06D6D69397FA}</ProjectGuid>
+    <ProjectGuid>{EF5A3D6D-7D77-3EC2-9892-8CE07D7EFC89}</ProjectGuid>
     <RootNamespace>TST</RootNamespace>
     <Keyword>Qt4VSv1.0</Keyword>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
