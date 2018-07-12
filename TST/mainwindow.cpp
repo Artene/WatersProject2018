@@ -41,10 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->Threshold_LineEdit->setValidator(new QIntValidator(0, 1000000, this));
 	ui->MinimumLimitTrim_LineEdit->setValidator(new QIntValidator(0, 1000000, this));
 	ui->MaximumLimitTrim_LineEdit->setValidator(new QIntValidator(0, 1000000, this));
-//	ui->RangeAttenuate_LineEdit->setValidator(new QIntValidator(0, 1000000, this));
-	
-	//QSlider horizontalSlider();
-	
+
 }
 
 MainWindow::~MainWindow()
@@ -55,7 +52,7 @@ MainWindow::~MainWindow()
 void MainWindow::CreatePictureOfGraph(int & nrPoze,QString graph)
 {
 	QString s = QTime::currentTime().toString();
-	//s.replace(s.begin(), s.end(), ':', '_');
+	
 	s.replace(":", "_");
 	QString outputDir = QDir::currentPath() +"\\saved_files";
 	QString fileName = graph + s + ".png";
@@ -86,9 +83,7 @@ void MainWindow::on_btn_generate_clicked()
 	{
 		Generator Calin(ui->PointsNumberMax_LineEdit_int->text().toInt(), ui->InferiorLimit_LineEdit->text().toDouble(), ui->SuperiorLimit_LineEdit->text().toDouble(), ui->Threshold_LineEdit->text().toInt());
 		Sorin.Set_graphPointsContainter(Calin.GenerateNumbers());
-		//Calin.GenerateNumbers();
-		//Writer.Write(Calin.GenerateNumbers(), "GeneratedNumbers.dat");
-		//Writer.Read(&Sorin, "GeneratedNumbers.dat");
+
 		Writer.ReadGraphics(this->xCoord, this->yCoord, &Sorin);
 
 		ui->customPlot->addGraph();
@@ -103,8 +98,7 @@ void MainWindow::on_btn_generate_clicked()
 		ui->customPlot->xAxis->setRange(0, ui->PointsNumberMax_LineEdit_int->text().toInt());
 		ui->customPlot->yAxis->setRange(minimumValue, maximumValue);
 
-		/*ui->customPlot->xAxis->setRange(0, ui->PointsNumberMax_LineEdit_int->text().toInt());
-		ui->customPlot->yAxis->setRange(ui->InferiorLimit_LineEdit->text().toInt(), ui->SuperiorLimit_LineEdit->text().toDouble());*/
+		
 		ui->customPlot->graph(0)->setData(this->xCoord, this->yCoord);
 		ui->customPlot->replot();
 		
@@ -122,10 +116,6 @@ void MainWindow::on_btn_generate_clicked()
 void MainWindow::on_pushButton_2_clicked()
 {
 
-	
-	//Graph Sorin;
-	//Writer.Read(&Sorin, "GeneratedNumbers.dat");
-	//Sorin.Set_graphPointsContainter(xCoord, yCoord); //-> se face trim pe graful atenuat + crapa in anumite cazuri trimul
 	ProcessingUnit Izabela;
 	if (ui->Trim_rd_button->isChecked())
 	{
@@ -137,7 +127,6 @@ void MainWindow::on_pushButton_2_clicked()
 			Graph Trimed;
 			QVector<double> xCoordTrimed, yCoordTrimed;			
 			Izabela.Trim(&Sorin, &Trimed, ui->MinimumLimitTrim_LineEdit->text().toInt(), ui->MaximumLimitTrim_LineEdit->text().toInt());
-			//Writer.Write(Trimed, "GraphTrimed.dat");
 			Writer.ReadGraphics(xCoordTrimed, yCoordTrimed, &Trimed);
 			ui->customPlot_2->xAxis->setRange(0, xCoord.size());
 			ui->customPlot_2->yAxis->setRange(minimumValue,maximumValue);
@@ -151,52 +140,37 @@ void MainWindow::on_pushButton_2_clicked()
 			
 		}
 	}
-   /* else if(ui->radioButton_2->isChecked())
-    {
-		Graph Attenuated;
-		Izabela.Attenuate(&Sorin, &Attenuated, ui->RangeAttenuate_LineEdit->text().toInt());
-		Writer.Write(Attenuated, "GraphAttenuated.dat");
-		Writer.ReadGraphics(xCoord, yCoord, "GraphAttenuated.dat");
-		
-		ui->customPlot_2->xAxis->setRange(0, ui->PointsNumberMax_LineEdit_int->text().toInt());
-		ui->customPlot_2->yAxis->setRange(ui->InferiorLimit_LineEdit->text().toInt(), ui->SuperiorLimit_LineEdit->text().toDouble());
-        ui->customPlot_2->graph(0)->setData(xCoord, yCoord);
-        ui->customPlot_2->replot();
-
-    }*/
+  
 	else if (ui->radioButton->isChecked())
 	{
-		
-		QString ValoareArie = QString::number(Izabela.CalculateArea(&Sorin),'g',6);
-		ui->AreaValue_LineEdit->setText(ValoareArie);
-		Writer.ReadGraphics(xCoord, yCoord, &Sorin);
+		if (!Sorin.Get_graphPointsContainer_by_reference().empty())
+		{
+			QString ValoareArie = QString::number(Izabela.CalculateArea(&Sorin), 'g', 6);
+			ui->AreaValue_LineEdit->setText(ValoareArie);
+			Writer.ReadGraphics(xCoord, yCoord, &Sorin);
 
-        ui->customPlot_2->addGraph();
-        ui->customPlot_2->graph(0)->setPen(QPen(Qt::blue)); 
-        ui->customPlot_2->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
-        ui->customPlot_2->addGraph();
-        ui->customPlot_2->graph(0)->setChannelFillGraph(ui->customPlot->graph(1));
+			ui->customPlot_2->addGraph();
+			ui->customPlot_2->graph(0)->setPen(QPen(Qt::blue));
+			ui->customPlot_2->graph(0)->setBrush(QBrush(QColor(0, 0, 255, 20)));
+			ui->customPlot_2->addGraph();
+			ui->customPlot_2->graph(0)->setChannelFillGraph(ui->customPlot->graph(1));
 
-        ui->customPlot_2->xAxis->setRange(0, xCoord.size());
-        ui->customPlot_2->yAxis->setRange(minimumValue,maximumValue);
+			ui->customPlot_2->xAxis->setRange(0, xCoord.size());
+			ui->customPlot_2->yAxis->setRange(minimumValue, maximumValue);
 
-        ui->customPlot_2->graph(0)->setData(xCoord, yCoord);
-        ui->customPlot_2->replot();
-        ui->customPlot_2->graph(0)->setBrush(QBrush(Qt::NoBrush)); 
-
+			ui->customPlot_2->graph(0)->setData(xCoord, yCoord);
+			ui->customPlot_2->replot();
+			ui->customPlot_2->graph(0)->setBrush(QBrush(Qt::NoBrush));
+		}
 	}
 }
 
 void MainWindow::on_horizontalSlider_valueChanged(int value)
 {
 	Scanner Writer;
-	// Sorin;
-	//Writer.Read(&Sorin, "GeneratedNumbers.dat");
-	//Sorin.Set_graphPointsContainter(xCoord, yCoord);
 	ProcessingUnit Izabela;
 	Graph Attenuated;
 	Izabela.Attenuate(&Sorin, &Attenuated, value);
-	//Writer.Write(Attenuated, "GraphAttenuated.dat");
 	Writer.ReadGraphics(xCoord, yCoord, &Attenuated);
 
 	ui->customPlot_2->xAxis->setRange(0, xCoord.size());
@@ -217,7 +191,6 @@ void MainWindow::on_actionSave_triggered()
 
 }
 
-//Functia asta te lasa sa ii selectezi 2 checkbox-uri simultan dupa ce dai new
 void MainWindow::on_actionNew_triggered()
 {
 	ui->customPlot->graph(0)->data()->clear();
@@ -235,12 +208,10 @@ void MainWindow::on_actionNew_triggered()
 	ui->MaximumLimitTrim_LineEdit->clear();
 	ui->AreaValue_LineEdit->clear();
 
-	/*ui->Trim_rd_button->setAutoExclusive(false);
-	ui->radioButton->setAutoExclusive(false);
-	*/
 	ui->Trim_rd_button->setChecked(false);
 	ui->radioButton->setChecked(false);
 
+	Sorin.Get_graphPointsContainer_by_reference().clear();
 
 
 }
@@ -252,15 +223,14 @@ void MainWindow::on_actionClose_triggered()
 
 void MainWindow::on_actionOpen_triggered()
 {
-    //In Qt currentPath e altundeva
+
 	QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), QDir::currentPath(), "Data(*.dat)");
 	std::string file = filename.toUtf8().constData();
-	//QDesktopServices::openUrl( QUrl::fromLocalFile(filename) );
 	if (!file.empty()) {
 		Scanner Writer;
 
 		Writer.Read(&Sorin, file);
-		Writer.ReadGraphics_2(this->xCoord, this->yCoord,file);//ReadGraphics2
+		Writer.ReadGraphics_2(this->xCoord, this->yCoord,file);
 		Sorin.Get_graphPointsContainer_by_reference().resize(xCoord.size());
 
 		ui->customPlot->addGraph();
